@@ -42,7 +42,8 @@ class Loading extends Phaser.Scene {
         this.load.image('cursor', './assets/sprites/global/cursor.png');
         this.load.audio('menuSelect', './assets/sound/menuSelect.wav');
         this.load.audio('menuConfirm', './assets/sound/menuConfirm.wav');
-        this.load.image('game','./assets/sprites/game/game.png');
+        this.load.image('game','./assets/sprites/game/game2.png');
+        this.load.image('inventoryLarge', './assets/sprites/ui/inventoryLarge.png');
         this.load.image('textSpacer','./assets/sprites/ui/textSpacer.png');
         this.load.image('suppliesImage','./assets/sprites/ui/supplies.png');
         this.load.image('contactsImage','./assets/sprites/ui/contacts.png');
@@ -55,6 +56,9 @@ class Loading extends Phaser.Scene {
         this.load.image('powerTube', './assets/sprites/game/tubes.png');
         this.load.image('wires', './assets/sprites/game/wire.png');
         this.load.image('settings', './assets/sprites/ui/settings.png');
+
+        this.load.image('materia', './assets/sprites/game/items/materia.png');
+
         this.load.bitmapFont('plantain', './assets/fonts/plantain_0.png', './assets/fonts/plantain.fnt');
         this.load.bitmapFont('plantainBold', './assets/fonts/plantainBold_0.png', './assets/fonts/plantainBold.fnt');
         this.load.bitmapFont('plantainItalics', './assets/fonts/plantainItalics_0.png', './assets/fonts/plantainItalics.fnt');

@@ -5,7 +5,6 @@ class Main extends Phaser.Scene {
 
     preload(){
         this.buttonList = [];
-        this.stats = [12, 30, 10, 30, 17, 30, 10000];
         this.powerLevel = '020'
         this.powerLevelMax = '200'
     }
@@ -27,13 +26,10 @@ class Main extends Phaser.Scene {
         this.separator2 = this.add.image(borderPadding+(this.contactsBox.width/3)-1,((this.contactsBox.height+borderPadding)*2)+1, 'uiSeparator1').setOrigin(0,0).setDepth(0);
         this.separator3 = this.add.image(borderPadding+(this.contactsBox.width/3)-1,((this.contactsBox.height+borderPadding)*3)+1, 'uiSeparator1').setOrigin(0,0).setDepth(0);
         
-        //this.separator3 = this.add.image(100+borderPadding-1,90, 'uiSeparator1').setOrigin(0,0).setDepth(0).setRotation(1.5708);
-
         this.uiBoxMain = this.add.sprite((borderPadding*2)+ this.machinesBox.width-5, borderPadding-10, 'uiBoxMain').setOrigin(0,0);
         this.uiBoxPower = this.add.sprite(playWindowSize-borderPadding-170, borderPadding, 'uiBoxPower').setOrigin(-1,0);
 
         this.statsBox = this.add.sprite(borderPadding,(this.machinesBox.height*3)+(borderPadding*4), 'uiBox2').setOrigin(0,0).setDepth(0);
-        this.statNumberValues = `${this.stats[0]}\n\r${this.stats[1]}\n\r${this.stats[2]}\n\r${this.stats[3]}\n\r${this.stats[4]}\n\r${this.stats[5]}\n\r\n\r${this.stats[6]}`;
         this.contents = "The boilers are running at full power."
 
         this.text = this.add.bitmapText(120, 315, 'plantainSmall', this.contents);
@@ -46,20 +42,18 @@ class Main extends Phaser.Scene {
         this.powerHeader = this.add.bitmapText(515,335, 'plantain', `${this.powerLevel}/${this.powerLevelMax}`);
         this.powerTextSpacer = this.add.image(504,330, 'textSpacer').setOrigin(0,0).setDepth(0);
 
-        this.statsHeader = this.add.bitmapText(borderPadding+5, (borderPadding*4)+(this.machinesBox.height*3)+5, 'plantain', 'Stats');
-        this.statSeparator = this.add.image(borderPadding+3.5, (borderPadding*4)+(this.machinesBox.height*3)+this.statsHeader.height+10, 'textSpacer').setOrigin(0,0);
-        this.statDescriptionText = this.add.bitmapText(borderPadding+5, (borderPadding*4)+(this.machinesBox.height*3)+40, 'plantainSmallItalics', 'Smarts\nFatigue\nCharm\nSanity\nSpirit\nFocus\n\nMoney');
-        this.moneySeparator = this.add.image(borderPadding+3.5, (borderPadding*4)+(this.machinesBox.height*3)+this.statsHeader.height+this.statDescriptionText.height, 'textSpacer').setOrigin(0,0);
-        this.statNumbers = this.add.bitmapText(borderPadding+30, (borderPadding*4)+(this.machinesBox.height*3)+40, 'plantainSmallItalics', this.statNumberValues).setRightAlign();
+        
         this.cameras.main.fadeIn(250);
 
         this.settingsButton = new customButton(this, 0, 0, 'settings', ['','']).setOrigin(0,0);
+
+        this.materiaInventory = new Inventory(this, 'inventoryLarge', 24, 405).setOrigin(0,0);
     }
 
     update(){
         this.cursor.update();
+        this.materiaInventory.update(this.cursor.x,this.cursor.y);
         this.powerHeader.text = `${this.powerLevel}/${this.powerLevelMax}`
-        this.statNumbers.text = `${this.stats[0]}\n\r${this.stats[1]}\n\r${this.stats[2]}\n\r${this.stats[3]}\n\r${this.stats[4]}\n\r${this.stats[5]}\n\r\n\r${this.stats[6]}`;
         
         for (let i = 0; i < this.buttonList.length; i++){
             this.buttonList[i].update(this.cursor.x,this.cursor.y);
@@ -71,14 +65,13 @@ class Main extends Phaser.Scene {
         if(button.isClicked){
             button.setTint(clickColor);
             if(button == this.machinesBox) {
-                this.stats[6]*=10;
+                this.materiaInventory.addItem({texture: 'materia', name:'materia'});
             }
             if(button == this.suppliesBox){
-                console.log(this.stats)
+                this.materiaInventory.removeItem({texture: 'materia', name:'materia'});
             }
             if(button == this.contactsBox){
-                this.clicks++
-                console.log(this.clicks)
+                this.materiaInventory.addItemToSlot({texture: 'materia', name:'materia'}, 2, 2);
             }
             if(button.label){
                 button.label.setTint(clickColor);
