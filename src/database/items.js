@@ -10,7 +10,8 @@ const itemDataBase = [
             speed: 0,
             HP: 0,
         },
-        color: 0xffffff
+        color: 0xffffff,
+        texture: 'materia'
     },
     {
         id: "002",
@@ -23,6 +24,7 @@ const itemDataBase = [
             speed: 0,
             HP: 0,
         },
-        color: 0xff0000
+        color: 0xff0000,
+        texture: 'materia'
     },
 ]

@@ -65,13 +65,13 @@ class Main extends Phaser.Scene {
         if(button.isClicked){
             button.setTint(clickColor);
             if(button == this.machinesBox) {
-                this.materiaInventory.addItem({texture: 'materia', name:'materia'});
+                this.materiaInventory.addItem("001");
             }
             if(button == this.suppliesBox){
-                this.materiaInventory.removeItem({texture: 'materia', name:'materia'});
+                
             }
             if(button == this.contactsBox){
-                this.materiaInventory.addItemToSlot({texture: 'materia', name:'materia'}, 2, 2);
+                this.materiaInventory.addItemToSlot("002", 1, 1);
             }
             if(button.label){
                 button.label.setTint(clickColor);
