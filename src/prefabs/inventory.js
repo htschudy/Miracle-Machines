@@ -30,12 +30,14 @@ class Inventory extends Phaser.GameObjects.Sprite {
             }
         }
     }
-    addItem(itemToAdd){
+    addItem(itemID){
+        let itemToAdd = itemDataBase.find(x => x.id === itemID);
+        console.log(`Found ${itemToAdd.name} at item id ${itemID}`);
         let itemAddedBool = false;
         itemAdd:for (let i = 0; i < this.itemHeight; i++){
             for (let j = 0; j < this.itemWidth; j++){
                 if(!this.itemQueue[i][j].item){
-                    this.itemQueue[i][j].item = new Item(this.scene, this.itemQueue[i][j].hitZoneX, this.itemQueue[i][j].hitZoneY, 'materia', 'Untyped Materia').setOrigin(0,0);
+                    this.itemQueue[i][j].item = new Item(this.scene, this.itemQueue[i][j].hitZoneX, this.itemQueue[i][j].hitZoneY, itemToAdd).setOrigin(0,0);
                     console.log(`Successfully added ${itemToAdd.name}!`);
                     itemAddedBool = true;
                     break itemAdd;
@@ -46,16 +48,25 @@ class Inventory extends Phaser.GameObjects.Sprite {
             console.log(`Not enough room to add ${itemToAdd.name}.`)
         }
     }
-    addItemToSlot(itemToAdd, i, j){
+    addItemToSlot(itemID, i, j){
+        let itemToAdd = itemDataBase.find(x => x.id === itemID);
+        console.log(`Found ${itemToAdd.name} at item id ${itemID}`);
         if (!this.itemQueue[i][j].item){
-            this.itemQueue[i][j].item = new Item(this.scene, this.itemQueue[i][j].hitZoneX, this.itemQueue[i][j].hitZoneY, 'materia', 'Untyped Materia').setOrigin(0,0);
+            this.itemQueue[i][j].item = new Item(this.scene, this.itemQueue[i][j].hitZoneX, this.itemQueue[i][j].hitZoneY, itemToAdd).setOrigin(0,0);
             console.log(`Successfully added ${itemToAdd.name} to slot [${i}][${j}]!`);
         } else {
             console.log(`Slot [${i}][${j}] is already full.`)
         }
     }
-    removeItem(item){
-
+    removeItem(itemID){
+        itemDel:for (let i = 0; i < this.itemHeight; i++){
+            for (let j = 0; j < this.itemWidth; j++){
+                if (this.itemQueue[i][j].id === itemID){
+                    //TODO: Item quantities.
+                    this.itemQueue[i][j] = undefined;
+                }
+            }
+        }
     }
     checkItemCollision(value, cursorX, cursorY){
         if(cursorX >= (value.hitZoneX) && cursorX <= (value.hitZoneX+this.itemActiveZoneSize) &&
